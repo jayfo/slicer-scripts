@@ -1,0 +1,7 @@
+tractdbcouch:
+  build: "fig/tractdbcouch"
+  ports:
+    - "5984:5984"
+  volumes:
+    - "tractdbcouchdata:/var/lib/couchdb"
+    - "tractdbcouchlogs:/var/log/couchdb"

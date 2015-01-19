@@ -1,0 +1,4 @@
+# Our actual CouchDB admin credentials
+admin:
+  user: user
+  password: password
