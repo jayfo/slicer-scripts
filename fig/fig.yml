@@ -5,3 +5,13 @@ tractdbcouch:
   volumes:
     - "tractdbcouchdata:/var/lib/couchdb"
     - "tractdbcouchlogs:/var/log/couchdb"
+
+web-dub:
+  git: https://github.com/uwdub/web-dub.git
+  gitdir: "fig/git/web-dub"
+  build: "fig/web-dub"
+
+web-jayfo:
+  git: https://github.com/uwdub/web-jayfo.git
+  gitdir: "fig/git/web-jayfo"
+  build: "fig/web-jayfo"
