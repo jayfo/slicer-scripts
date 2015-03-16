@@ -8,6 +8,10 @@ tractdbcouch:
 
 webdub:
   build: "fig/web-dub"
+  ports:
+    - "4001:4000"
 
 webjayfo:
   build: "fig/web-jayfo"
+  ports:
+    - "4000:4000"

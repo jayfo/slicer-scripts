@@ -1,6 +1,7 @@
 import fabric
 import fabric.api
 import fabric.contrib.files
+import os.path
 import yaml
 
 
@@ -28,20 +29,21 @@ def init():
 def pull():
     # Parse our YAML
     with open('fig/git.yml') as f:
-        figyaml = yaml.load(f)
+        gityml = yaml.load(f)
 
     # Pull any services that have a git directory
-    for service in figyaml:
-        if 'git' in figyaml[service]:
+    for service in gityml:
+        if 'git' in gityml[service]:
             # The build directory is where we clone to
-            dir_clone = figyaml[service]['workdir']
+            dir_clone = gityml[service]['workdir']
             if fabric.contrib.files.exists(dir_clone):
                 # Already exists, just pull it
                 fabric.api.run('(cd {} && git pull)'.format(dir_clone))
             else:
                 # Need to clone it, put the git directory out of the way
-                url_git = figyaml[service]['git']
-                dir_git = figyaml[service]['gitdir']
+                url_git = gityml[service]['git']
+                dir_git = gityml[service]['gitdir']
+                fabric.api.run('mkdir -p {}'.format(os.path.dirname(dir_git)))
                 fabric.api.run('git clone --separate-git-dir {} {} {}'.format(dir_git, url_git, dir_clone))
 
 
@@ -75,9 +77,9 @@ def test_jekyll():
     # # The fig
     fabric.api.put('fig/git.yml', 'fig')
 
-    fabric.api.run('mkdir -p fig/testjekyll')
+    # fabric.api.run('mkdir -p fig/testjekyll')
     # fabric.api.put('fig/tractdbcouch/applyadmin.py', 'fig/tractdbcouch')
-    fabric.api.put('fig/testjekyll/Dockerfile', 'fig/testjekyll')
+    # fabric.api.put('fig/testjekyll/Dockerfile', 'fig/testjekyll')
     # fabric.api.put('fig/tractdbcouch/local.ini', 'fig/tractdbcouch')
     # fabric.api.put('fig/tractdbcouch/requirements3.txt', 'fig/tractdbcouch')
     # fabric.api.put('fig/tractdbcouch/tractdbcouch.yml', 'fig/tractdbcouch')

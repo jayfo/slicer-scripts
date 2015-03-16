@@ -1,4 +1,4 @@
-tractdbcouch:
+#tractdbcouch:
 
 webdub_jekyll:
   git: https://github.com/fogies/docker-jekyll-site.git
@@ -16,7 +16,7 @@ webjayfo_jekyll:
   workdir: "fig/web-jayfo"
 
 webjayfo_site:
-  git: https://github.com/uwdub/web-jayfo.git
+  git: https://github.com/fogies/web-jayfo.git
   gitdir: "fig/git/web-jayfo-site"
   workdir: "fig/web-jayfo/site"
 
