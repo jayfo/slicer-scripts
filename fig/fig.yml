@@ -6,7 +6,8 @@ tractdbcouch:
     - "tractdbcouchdata:/var/lib/couchdb"
     - "tractdbcouchlogs:/var/log/couchdb"
 
-testjekyll:
-  build: "fig/testjekyll"
-  environment:
-    - JEKYLLSRC="fig/web-jayfo"
+webdub:
+  build: "fig/web-dub"
+
+webjayfo:
+  build: "fig/web-jayfo"
