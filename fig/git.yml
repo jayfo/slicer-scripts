@@ -1,14 +1,22 @@
 tractdbcouch:
 
-webdub:
-  git: https://github.com/uwdub/web-dub.git
-  gitdir: "fig/git/web-dub"
+webdub_jekyll:
+  git: https://github.com/fogies/docker-jekyll-site.git
+  gitdir: "fig/git/web-dub-jekyll"
   workdir: "fig/web-dub"
 
-webjayfo:
-  git: https://github.com/uwdub/web-jayfo.git
-  gitdir: "fig/git/web-jayfo"
+webdub_site:
+  git: https://github.com/uwdub/web-dub.git
+  gitdir: "fig/git/web-dub"
+  workdir: "fig/web-dub/site"
+
+webjayfo_jekyll:
+  git: https://github.com/fogies/docker-jekyll-site.git
+  gitdir: "fig/git/web-jayfo-jekyll"
   workdir: "fig/web-jayfo"
 
-testjekyll:
-  build: "fig/testjekyll"
+webjayfo_site:
+  git: https://github.com/uwdub/web-jayfo.git
+  gitdir: "fig/git/web-jayfo-site"
+  workdir: "fig/web-jayfo/site"
+
