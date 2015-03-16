@@ -1,0 +1,14 @@
+tractdbcouch:
+
+webdub:
+  git: https://github.com/uwdub/web-dub.git
+  gitdir: "fig/git/web-dub"
+  workdir: "fig/web-dub"
+
+webjayfo:
+  git: https://github.com/uwdub/web-jayfo.git
+  gitdir: "fig/git/web-jayfo"
+  workdir: "fig/web-jayfo"
+
+testjekyll:
+  build: "fig/testjekyll"
