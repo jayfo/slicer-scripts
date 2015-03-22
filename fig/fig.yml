@@ -1,17 +1,24 @@
+nginxproxy:
+  build: "fig/nginx-proxy"
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - tractdbcouch
+    - webdub
+    - webjayfo
+
 tractdbcouch:
   build: "fig/tractdbcouch"
-  ports:
-    - "5984:5984"
+  # port 5984
   volumes:
     - "tractdbcouchdata:/var/lib/couchdb"
     - "tractdbcouchlogs:/var/log/couchdb"
 
 webdub:
   build: "fig/web-dub"
-  ports:
-    - "4001:4000"
+  # port 4000
 
 webjayfo:
   build: "fig/web-jayfo"
-  ports:
-    - "4000:4000"
+  # port 4000

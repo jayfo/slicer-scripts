@@ -71,17 +71,21 @@ def start():
         fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
 
 
-def test_jekyll():
+def test_nginx():
     # # The fig
     fabric.api.put('fig/fig.yml', 'fig')
     # # The fig
-    fabric.api.put('fig/git.yml', 'fig')
+    # fabric.api.put('fig/git.yml', 'fig')
 
-    # fabric.api.run('mkdir -p fig/testjekyll')
+    fabric.api.run('mkdir -p fig/nginx-proxy')
     # fabric.api.put('fig/tractdbcouch/applyadmin.py', 'fig/tractdbcouch')
-    # fabric.api.put('fig/testjekyll/Dockerfile', 'fig/testjekyll')
+    fabric.api.put('fig/nginx-proxy/Dockerfile', 'fig/nginx-proxy')
+    fabric.api.put('fig/nginx-proxy/nginx.conf', 'fig/nginx-proxy')
     # fabric.api.put('fig/tractdbcouch/local.ini', 'fig/tractdbcouch')
     # fabric.api.put('fig/tractdbcouch/requirements3.txt', 'fig/tractdbcouch')
     # fabric.api.put('fig/tractdbcouch/tractdbcouch.yml', 'fig/tractdbcouch')
     # Rebuild the fig
     fabric.api.sudo('fig -f ~/fig/fig.yml build')
+    # And run it
+    fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
+
