@@ -12,8 +12,8 @@ tractdbcouch:
   build: "fig/tractdbcouch"
   # port 5984
   volumes:
-    - "tractdbcouchdata:/var/lib/couchdb"
-    - "tractdbcouchlogs:/var/log/couchdb"
+    - "backup/tractdbcouch/data:/var/lib/couchdb"
+    - "backup/tractdbcouch/logs:/var/log/couchdb"
 
 webdub:
   build: "fig/web-dub"

@@ -14,10 +14,24 @@ def init():
     fabric.api.sudo('apt-get -q -y update')
     fabric.api.sudo('apt-get -q -y dist-upgrade')
 
+    # Ensure some packages we need
+    fabric.api.sudo('apt-get install dos2unix')
+
+    # Create our backup/scratch directory structure
+    if not fabric.contrib.files.exists('backup'):
+        fabric.api.run('mkdir backup')
+    if not fabric.contrib.files.exists('scratch'):
+        fabric.api.run('mkdir scratch')
+    if not fabric.contrib.files.exists('scratch/secrets'):
+        fabric.api.run('mkdir scratch/secrets')
+
     # Docker images can quickly fill a small disk, ensure they are on our big disk
     if not fabric.contrib.files.exists('dockerlib'):
-        fabric.api.sudo('mkdir dockerlib')
+        fabric.api.run('mkdir dockerlib')
+    # This points docker storage at the given directory, any
     fabric.api.put('defaultdocker', '/etc/default/docker', use_sudo=True)
+    # Believe it or not, things totally explode if you have a carriage return in the file
+    fabric.api.sudo('dos2unix /etc/default/docker')
 
     # Install Docker
     fabric.api.sudo('curl -sSL https://get.docker.com/ubuntu/ | sh')
