@@ -26,10 +26,9 @@ def init():
         fabric.api.run('mkdir scratch/secrets')
 
     # Docker images can quickly fill a small disk, ensure they are on our big disk
-    if not fabric.contrib.files.exists('dockerlib'):
-        fabric.api.run('mkdir dockerlib')
-    # This points docker storage at the given directory, any
-    fabric.api.put('defaultdocker', '/etc/default/docker', use_sudo=True)
+    fabric.api.run('mkdir -p scratch/docker')
+    # This points docker storage at the given directory
+    fabric.api.put('scratch/init/etc/default/docker', '/etc/default/docker', use_sudo=True)
     # Believe it or not, things totally explode if you have a carriage return in the file
     fabric.api.sudo('dos2unix /etc/default/docker')
 
