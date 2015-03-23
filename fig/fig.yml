@@ -16,9 +16,9 @@ tractdbcouch:
     - "backup/tractdbcouch/logs:/var/log/couchdb"
 
 webdub:
-  build: "fig/web-dub"
+  build: "scratch/webdub"
   # port 4000
 
 webjayfo:
-  build: "fig/web-jayfo"
+  build: "scratch/webjayfo"
   # port 4000

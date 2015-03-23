@@ -2,21 +2,21 @@
 
 webdub_jekyll:
   git: https://github.com/fogies/docker-jekyll-site.git
-  gitdir: "fig/git/web-dub-jekyll"
-  workdir: "fig/web-dub"
+  gitdir: "scratch/git/webdub_jekyll"
+  workdir: "scratch/webdub"
 
 webdub_site:
   git: https://github.com/uwdub/web-dub.git
-  gitdir: "fig/git/web-dub"
-  workdir: "fig/web-dub/site"
+  gitdir: "scratch/git/webdub"
+  workdir: "scratch/webdub/site"
 
 webjayfo_jekyll:
   git: https://github.com/fogies/docker-jekyll-site.git
-  gitdir: "fig/git/web-jayfo-jekyll"
-  workdir: "fig/web-jayfo"
+  gitdir: "scratch/git/webjayfo_jekyll"
+  workdir: "scratch/webjayfo"
 
 webjayfo_site:
   git: https://github.com/fogies/web-jayfo.git
-  gitdir: "fig/git/web-jayfo-site"
-  workdir: "fig/web-jayfo/site"
+  gitdir: "scratch/git/webjayfo"
+  workdir: "scratch/webjayfo/site"
 
