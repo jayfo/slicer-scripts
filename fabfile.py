@@ -28,7 +28,7 @@ def init():
     # Docker images can quickly fill a small disk, ensure they are on our big disk
     fabric.api.run('mkdir -p scratch/docker')
     # This points docker storage at the given directory
-    fabric.api.put('scratch/init/etc/default/docker', '/etc/default/docker', use_sudo=True)
+    fabric.api.put('init/etc/default/docker', '/etc/default/docker', use_sudo=True)
     # Believe it or not, things totally explode if you have a carriage return in the file
     fabric.api.sudo('dos2unix /etc/default/docker')
 
@@ -60,13 +60,23 @@ def pull():
                 fabric.api.run('git clone --separate-git-dir {} {} {}'.format(dir_git, url_git, dir_clone))
 
 
+def push():
+    # Upload our fig and git files
+    fabric.api.put('fig/fig.yml', 'fig')
+    fabric.api.put('fig/git.yml', 'fig')
+
+    # Upload our nginxproxy, which is closely related to our fig and git files
+    fabric.api.run('mkdir -p scratch/nginxproxy')
+    fabric.api.put('scratch/nginxproxy', 'scratch')
+
+
 def start():
     # # Ensure we have our config data uploaded, starting from a clean slate
     # fabric.api.run('mkdir -p fig/')
     # fabric.api.run('rm -rf fig/*')
     #
     # # The fig
-    fabric.api.put('fig/fig.yml', 'fig')
+    # fabric.api.put('fig/fig.yml', 'fig')
     #
     # # Everything for tractdbcouch
     # fabric.api.run('mkdir -p fig/tractdbcouch')
@@ -84,21 +94,21 @@ def start():
         fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
 
 
-def test_nginx():
-    # # The fig
-    fabric.api.put('fig/fig.yml', 'fig')
-    # # The fig
-    # fabric.api.put('fig/git.yml', 'fig')
-
-    fabric.api.run('mkdir -p fig/nginx-proxy')
-    # fabric.api.put('fig/tractdbcouch/applyadmin.py', 'fig/tractdbcouch')
-    fabric.api.put('fig/nginx-proxy/Dockerfile', 'fig/nginx-proxy')
-    fabric.api.put('fig/nginx-proxy/nginx.conf', 'fig/nginx-proxy')
-    # fabric.api.put('fig/tractdbcouch/local.ini', 'fig/tractdbcouch')
-    # fabric.api.put('fig/tractdbcouch/requirements3.txt', 'fig/tractdbcouch')
-    # fabric.api.put('fig/tractdbcouch/tractdbcouch.yml', 'fig/tractdbcouch')
-    # Rebuild the fig
-    fabric.api.sudo('fig -f ~/fig/fig.yml build')
-    # And run it
-    fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
+# def test_nginx():
+#     # # The fig
+#     fabric.api.put('fig/fig.yml', 'fig')
+#     # # The fig
+#     # fabric.api.put('fig/git.yml', 'fig')
+#
+#     fabric.api.run('mkdir -p fig/nginxproxy')
+#     # fabric.api.put('fig/tractdbcouch/applyadmin.py', 'fig/tractdbcouch')
+#     fabric.api.put('fig/nginxproxy/Dockerfile', 'fig/nginxproxy')
+#     fabric.api.put('fig/nginxproxy/nginx.conf', 'fig/nginxproxy')
+#     # fabric.api.put('fig/tractdbcouch/local.ini', 'fig/tractdbcouch')
+#     # fabric.api.put('fig/tractdbcouch/requirements3.txt', 'fig/tractdbcouch')
+#     # fabric.api.put('fig/tractdbcouch/tractdbcouch.yml', 'fig/tractdbcouch')
+#     # Rebuild the fig
+#     fabric.api.sudo('fig -f ~/fig/fig.yml build')
+#     # And run it
+#     fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
 

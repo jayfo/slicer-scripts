@@ -1,5 +1,5 @@
 nginxproxy:
-  build: "fig/nginx-proxy"
+  build: "scratch/nginxproxy"
   ports:
     - "80:80"
     - "443:443"
