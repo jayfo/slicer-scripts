@@ -93,7 +93,7 @@ def push_secrets():
     fabric.api.run('mkdir -p scratch/secrets/')
 
     # Upload our secrets
-    fabric.api.put('secrets', 'scratch')
+    fabric.api.put('scratch/secrets', 'scratch')
 
 
 def start():

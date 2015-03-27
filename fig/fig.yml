@@ -9,16 +9,20 @@ nginxproxy:
     - webjayfo
 
 tractdbcouch:
-  build: "fig/tractdbcouch"
   # port 5984
+  build: "fig/tractdbcouch"
   volumes:
     - "backup/tractdbcouch/data:/var/lib/couchdb"
     - "backup/tractdbcouch/logs:/var/log/couchdb"
 
 webdub:
-  build: "scratch/webdub"
   # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    JEKYLL_GIT_REPOSITORY: "https://github.com/uwdub/web-dub.git"
 
 webjayfo:
-  build: "scratch/webjayfo"
   # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    JEKYLL_GIT_REPOSITORY: "https://github.com/fogies/web-jayfo.git"
