@@ -1,7 +1,31 @@
-tractdbcouch:
-  build: "fig/tractdbcouch"
-  ports:
-    - "5984:5984"
+nginxproxy:
+  build: "https://github.com/fogies/docker-nginx.git"
   volumes:
-    - "tractdbcouchdata:/var/lib/couchdb"
-    - "tractdbcouchlogs:/var/log/couchdb"
+    - "scratch/config/nginxproxy:/config"
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - tractdbcouch
+    - webdub
+    - webjayfo
+
+tractdbcouch:
+  # port 5984
+  build: "https://github.com/tractdb/docker-tractdb-couch.git"
+  volumes:
+    - "backup/tractdbcouch/data:/var/lib/couchdb"
+    - "backup/tractdbcouch/logs:/var/log/couchdb"
+    - "scratch/secrets/tractdbcouch:/secrets"
+
+webdub:
+  # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    JEKYLL_GIT_REPOSITORY: "https://github.com/uwdub/web-dub.git"
+
+webjayfo:
+  # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    JEKYLL_GIT_REPOSITORY: "https://github.com/fogies/web-jayfo.git"

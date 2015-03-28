@@ -7,3 +7,6 @@ env34
 
 # Pycharm files
 .idea
+
+# Our server secrets
+scratch/secrets
