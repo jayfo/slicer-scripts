@@ -10,10 +10,11 @@ nginxproxy:
 
 tractdbcouch:
   # port 5984
-  build: "fig/tractdbcouch"
+  build: "https://github.com/tractdb/docker-tractdb-couch.git"
   volumes:
     - "backup/tractdbcouch/data:/var/lib/couchdb"
     - "backup/tractdbcouch/logs:/var/log/couchdb"
+    - "scratch/secrets/tractdbcouch:/secrets"
 
 webdub:
   # port 4000

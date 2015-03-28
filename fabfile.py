@@ -62,16 +62,18 @@ def pull():
 
 def purge_config():
     # Clear out any existing config
+    fabric.api.run('rm -rf fig')
+    fabric.api.run('rm -rf scratch/nginxproxy')
+
     fabric.api.run('mkdir -p fig/')
-    fabric.api.run('rm -rf fig/*')
     fabric.api.run('mkdir -p scratch/nginxproxy/')
-    fabric.api.run('rm -rf scratch/nginxproxy/*')
 
 
 def purge_secrets():
     # Clear out any existing secrets
+    fabric.api.run('rm -rf scratch/secrets')
+
     fabric.api.run('mkdir -p scratch/secrets/')
-    fabric.api.run('rm -rf scratch/secrets/*')
 
 
 def push_config():
