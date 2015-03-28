@@ -26,8 +26,8 @@ def init():
     # Docker images can quickly fill a small disk, ensure they are on our big disk
     fabric.api.run('mkdir -p scratch/docker')
     # This points docker storage at the given directory
-    fabric.api.put('init/etc/default/docker', '/etc/default/docker', use_sudo=True)
     # Believe it or not, things totally explode if you have a carriage return in the file
+    fabric.api.put('init/etc/default/docker', '/etc/default/docker', use_sudo=True)
     fabric.api.sudo('dos2unix /etc/default/docker')
 
     # Install Docker
@@ -40,37 +40,27 @@ def init():
 def purge_config():
     # Clear out any existing config
     fabric.api.run('rm -rf fig')
-    fabric.api.run('rm -rf scratch/nginxproxy')
-
-    fabric.api.run('mkdir -p fig/')
-    fabric.api.run('mkdir -p scratch/nginxproxy/')
+    fabric.api.run('rm -rf scratch/config')
 
 
 def purge_secrets():
     # Clear out any existing secrets
     fabric.api.run('rm -rf scratch/secrets')
 
-    fabric.api.run('mkdir -p scratch/secrets/')
-
 
 def push_config():
-    # Ensure directories exist
+    # Upload our fig file
     fabric.api.run('mkdir -p fig/')
-    fabric.api.run('mkdir -p scratch/nginxproxy/')
-
-    # Upload our fig and git files
     fabric.api.put('fig/fig.yml', 'fig')
 
-    # Upload our nginxproxy, which is closely related to our fig and git files
-    fabric.api.run('mkdir -p scratch/nginxproxy')
-    fabric.api.put('scratch/nginxproxy', 'scratch')
+    # Upload our config files
+    fabric.api.run('mkdir -p scratch/config/')
+    fabric.api.put('scratch/config', 'scratch')
 
 
 def push_secrets():
-    # Ensure directories exist
-    fabric.api.run('mkdir -p scratch/secrets/')
-
     # Upload our secrets
+    fabric.api.run('mkdir -p scratch/secrets/')
     fabric.api.put('scratch/secrets', 'scratch')
 
 

@@ -1,5 +1,7 @@
 nginxproxy:
-  build: "scratch/nginxproxy"
+  build: "https://github.com/fogies/docker-nginx.git"
+  volumes:
+    - "scratch/config/nginxproxy:/config"
   ports:
     - "80:80"
     - "443:443"
