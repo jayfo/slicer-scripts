@@ -70,3 +70,8 @@ def start():
 
     # And run it
     fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
+
+
+def stop():
+    # Stop everything
+    fabric.api.sudo('fig -f ~/fig/fig.yml stop')
