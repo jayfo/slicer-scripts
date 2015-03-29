@@ -7,6 +7,7 @@ nginxproxy:
     - "443:443"
   links:
     - tractdbcouch
+    - tractdbpyramid
     - webdub
     - webjayfo
 
@@ -17,6 +18,10 @@ tractdbcouch:
     - "backup/tractdbcouch/data:/var/lib/couchdb"
     - "backup/tractdbcouch/logs:/var/log/couchdb"
     - "scratch/secrets/tractdbcouch:/secrets"
+
+tractdbpyramid:
+  # port 8080
+  build: "https://github.com/tractdb/docker-tractdb-pyramid.git"
 
 webdub:
   # port 4000
