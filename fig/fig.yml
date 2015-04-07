@@ -1,3 +1,6 @@
+################################################################################
+# Our proxy, which should only point at ambassadors
+################################################################################
 nginxproxy:
   build: "https://github.com/fogies/docker-nginx.git"
   volumes:
@@ -6,11 +9,13 @@ nginxproxy:
     - "80:80"
     - "443:443"
   links:
-    - tractdbcouch
-    - tractdbpyramid
-    - webdub
-    - webjayfo
+    - ambassadortractdbcouch
+    - ambassadortractdbpyramid
+    - ambassadorwebdub
 
+################################################################################
+# TractDBCouch and its ambassador
+################################################################################
 tractdbcouch:
   # port 5984
   build: "https://github.com/tractdb/docker-tractdb-couch.git"
@@ -19,18 +24,36 @@ tractdbcouch:
     - "backup/tractdbcouch/logs:/var/log/couchdb"
     - "scratch/secrets/tractdbcouch:/secrets"
 
+ambassadortractdbcouch:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name fig_tractdbcouch_1"
+
+################################################################################
+# TractDBPyramid and its ambassador
+################################################################################
 tractdbpyramid:
   # port 8080
   build: "https://github.com/tractdb/docker-tractdb-pyramid.git"
 
+ambassadortractdbpyramid:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name fig_tractdbpyramid_1"
+
+################################################################################
+# WebDUB and its ambassador
+################################################################################
 webdub:
   # port 4000
   build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     JEKYLL_GIT_REPOSITORY: "https://github.com/uwdub/web-dub.git"
 
-webjayfo:
-  # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  environment:
-    JEKYLL_GIT_REPOSITORY: "https://github.com/fogies/web-jayfo.git"
+ambassadorwebdub:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name fig_webdub_1"
