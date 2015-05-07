@@ -44,7 +44,7 @@ ambassadortractdbpyramid:
   command: "-name fig_tractdbpyramid_1"
 
 ################################################################################
-# WebDUB and its ambassador
+# WebDUB, its ambassador, and its watcher
 ################################################################################
 webdub:
   # port 4000
@@ -57,3 +57,12 @@ ambassadorwebdub:
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
   command: "-name fig_webdub_1"
+
+watcherwebdub:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "fig:/fig"
+  environment:
+    GIT_REPOSITORY: "https://github.com/uwdub/web-dub.git"
+    CONTAINER: "webdub"
