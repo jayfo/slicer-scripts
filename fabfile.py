@@ -15,6 +15,9 @@ def init():
     # Ensure some packages we need
     fabric.api.sudo('apt-get install dos2unix')
 
+    # Clean up
+    fabric.api.sudo('apt-get clean')
+
     # Create our backup/scratch directory structure
     if not fabric.contrib.files.exists('backup'):
         fabric.api.run('mkdir backup')
