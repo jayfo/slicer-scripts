@@ -51,6 +51,21 @@ def purge_secrets():
     fabric.api.run('rm -rf scratch/secrets')
 
 
+def purge_repository(name):
+    # Remove a directory we have previously pulled
+    fabric.api.run('rm -rf fig/{name}'.format(name=name))
+
+
+def pull_repository(name, git, branch='master'):
+    # Pull a repository, generally because we want to use it for development testing
+
+    # We'll always clone from scratch, to be safe
+    fabric.api.run('rm -rf fig/{name}'.format(name=name))
+
+    fabric.api.run('git clone {git} fig/{name}'.format(name=name, git=git))
+    fabric.api.run('cd fig/{name} && git checkout {branch}'.format(name=name, branch=branch))
+
+
 def push_config():
     # Upload our fig file
     fabric.api.run('mkdir -p fig/')
