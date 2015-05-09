@@ -82,14 +82,23 @@ def push_secrets():
     fabric.api.put('scratch/secrets', 'scratch')
 
 
-def start():
-    # Rebuild the fig
-    fabric.api.sudo('fig -f ~/fig/fig.yml build')
+def start(service=None):
+    if service is None:
+        # Rebuild everything
+        fabric.api.sudo('fig -f ~/fig/fig.yml build')
+        # And run it
+        fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
+    else:
+        # Rebuild this service
+        fabric.api.sudo('fig -f ~/fig/fig.yml build {}'.format(service))
+        # And run it
+        fabric.api.sudo('fig -f ~/fig/fig.yml up -d {}'.format(service))
 
-    # And run it
-    fabric.api.sudo('fig -f ~/fig/fig.yml up -d')
 
-
-def stop():
-    # Stop everything
-    fabric.api.sudo('fig -f ~/fig/fig.yml stop')
+def stop(service=None):
+    if service is None:
+        # Stop everything
+        fabric.api.sudo('fig -f ~/fig/fig.yml stop')
+    else:
+        # Stop this service
+        fabric.api.sudo('fig -f ~/fig/fig.yml stop {}'.format(service))
