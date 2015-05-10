@@ -30,6 +30,15 @@ tractdbcouchambassador:
     - "/var/run/docker.sock:/var/run/docker.sock"
   command: "-name fig_tractdbcouch_1"
 
+tractdbcouchwatcher:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "fig:/fig"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
+    SERVICE: "tractdbcouch"
+
 ################################################################################
 # TractDBPyramid and its ambassador
 ################################################################################
@@ -42,6 +51,15 @@ tractdbpyramidambassador:
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
   command: "-name fig_tractdbpyramid_1"
+
+tractdbpyramidwatcher:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "fig:/fig"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-pyramid.git"
+    SERVICE: "tractdbpyramid"
 
 ################################################################################
 # WebDUB, its ambassador, and its watcher
