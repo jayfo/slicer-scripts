@@ -62,6 +62,26 @@ tractdbpyramidwatcher:
     SERVICE: "tractdbpyramid"
 
 ################################################################################
+# WebJayFo and its watcher
+################################################################################
+webjayfo:
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  volumes:
+    - "scratch/secrets/webjayfo/webjayfo.yml:/publish.yml"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
+
+webjayfowatcher:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "fig:/fig"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+    GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
+    SERVICE: "webjayfo"
+
+################################################################################
 # WebDUB, its ambassador, and its watcher
 ################################################################################
 webdub:
