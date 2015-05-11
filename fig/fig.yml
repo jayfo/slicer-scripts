@@ -1,5 +1,5 @@
 ################################################################################
-# Our proxy, which should only point at ambassadors
+# Proxy points incoming traffic at ambassadors
 ################################################################################
 nginxproxy:
   build: "https://github.com/fogies/docker-nginx.git"
@@ -14,7 +14,7 @@ nginxproxy:
     - webdubambassador:webdub
 
 ################################################################################
-# TractDBCouch and its ambassador
+# tractdbcouch, its ambassador, and its watcher
 ################################################################################
 tractdbcouch:
   # port 5984
@@ -40,7 +40,7 @@ tractdbcouchwatcher:
     SERVICE: "tractdbcouch"
 
 ################################################################################
-# TractDBPyramid and its ambassador
+# tractdbpyramid, its ambassador, and its watcher
 ################################################################################
 tractdbpyramid:
   # port 8080
@@ -62,7 +62,7 @@ tractdbpyramidwatcher:
     SERVICE: "tractdbpyramid"
 
 ################################################################################
-# WebJayFo and its watcher
+# webjayfo and its watcher
 ################################################################################
 webjayfo:
   build: "https://github.com/fogies/docker-jekyll-site.git"
@@ -82,7 +82,7 @@ webjayfowatcher:
     SERVICE: "webjayfo"
 
 ################################################################################
-# WebDUB, its ambassador, and its watcher
+# webdub, its ambassador, and its watcher
 ################################################################################
 webdub:
   # port 4000
