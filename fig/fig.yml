@@ -5,6 +5,8 @@ nginxproxy:
   build: "https://github.com/fogies/docker-nginx.git"
   volumes:
     - "scratch/config/nginxproxy:/config"
+    - "scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
+    - "scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
   ports:
     - "80:80"
     - "443:443"
