@@ -7,6 +7,7 @@ nginxproxy:
     - "scratch/config/nginxproxy:/config"
     - "scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
     - "scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
+    - "scratch/secrets/tractdbssl/tractdb.org.dhparams.pem:/etc/ssl/nginx/tractdb.org.dhparams.pem"
   ports:
     - "80:80"
     - "443:443"
