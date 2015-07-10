@@ -49,6 +49,10 @@ tractdbcouchwatcher:
 tractdbpyramid:
   # port 8080
   build: "https://github.com/tractdb/docker-tractdb-pyramid.git"
+  volumes:
+    - "scratch/secrets/tractdbpyramid:/secrets"
+  links:
+    - tractdbcouchambassador:tractdbcouch
 
 tractdbpyramidambassador:
   image: cpuguy83/docker-grand-ambassador
