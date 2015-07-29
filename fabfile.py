@@ -53,11 +53,16 @@ def purge_secrets():
 
 def purge_repository(name):
     # Remove a directory we have previously pulled
+    #
+    # e.g. fab slicer purge_repository:pyramidwork
+
     fabric.api.run('rm -rf fig/{name}'.format(name=name))
 
 
 def pull_repository(name, git, branch='master'):
     # Pull a repository, generally because we want to use it for development testing
+    #
+    # e.g. fab slicer pull_repository:pyramidwork,https://github.com/jayfo/docker-tractdb-pyramid.git,useractions
 
     # We'll always clone from scratch, to be safe
     fabric.api.run('rm -rf fig/{name}'.format(name=name))
@@ -83,6 +88,11 @@ def push_secrets():
 
 
 def start(service=None):
+    # Start a service, restarting if necessary.
+    #
+    # e.g. fab slicer start
+    # e.g. fab slicer start:tractdbpyramid
+
     if service is None:
         # Rebuild everything
         fabric.api.sudo('fig -f ~/fig/fig.yml build')
