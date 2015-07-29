@@ -1,7 +1,2 @@
 # Needed for Fabric
-ecdsa
-pycrypto
 fabric
-
-# Needed for parsing fig.yml
-PyYAML
