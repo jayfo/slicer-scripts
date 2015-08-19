@@ -14,6 +14,7 @@ nginxproxy:
   links:
     - tractdbcouchambassador:tractdbcouch
     - tractdbpyramidambassador:tractdbpyramid
+    - tractdbweb:tractdbweb
     - webdubambassador:webdub
     - webduboldpapersambassador:webduboldpapers
 
@@ -68,6 +69,31 @@ tractdbpyramidwatcher:
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-pyramid.git"
     SERVICE: "tractdbpyramid"
+
+################################################################################
+# tractdbweb, its ambassador, and its watcher
+################################################################################
+tractdbweb:
+  # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
+
+tractdbwebambassador:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name fig_tractdbweb_1"
+
+tractdbwebwatcher:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "fig:/fig"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
+    SERVICE: "tractdbweb"
 
 ################################################################################
 # webcse441sp15 and its watcher
