@@ -14,7 +14,7 @@ nginxproxy:
   links:
     - tractdbcouchambassador:tractdbcouch
     - tractdbpyramidambassador:tractdbpyramid
-    - tractdbweb:tractdbweb
+    - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
     - webduboldpapersambassador:webduboldpapers
 
