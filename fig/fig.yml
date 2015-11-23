@@ -117,26 +117,6 @@ webcse440au15watcher:
     SERVICE: "webcse440au15"
 
 ################################################################################
-# webcse441sp15 and its watcher
-################################################################################
-webcse441sp15:
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  volumes:
-    - "scratch/secrets/webcse441sp15/webcse441sp15.yml:/publish.yml"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse441/web-cse441-sp15.git"
-
-webcse441sp15watcher:
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "fig:/fig"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse441/web-cse441-sp15.git"
-    SERVICE: "webcse441sp15"
-
-################################################################################
 # webdub, its ambassador, and its watcher
 ################################################################################
 webdub:
