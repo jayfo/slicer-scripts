@@ -5,6 +5,9 @@ nginxproxy:
   build: "https://github.com/fogies/docker-nginx.git"
   volumes:
     - "scratch/config/nginxproxy:/config"
+    - "scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
+    - "scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
+    - "scratch/secrets/dubssl/dub.washington.edu.dhparams.pem:/etc/ssl/nginx/dub.washington.edu.dhparams.pem"
     - "scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
     - "scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
     - "scratch/secrets/tractdbssl/tractdb.org.dhparams.pem:/etc/ssl/nginx/tractdb.org.dhparams.pem"
