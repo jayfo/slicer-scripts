@@ -19,12 +19,9 @@ def init():
     fabric.api.sudo('apt-get clean')
 
     # Create our backup/scratch directory structure
-    if not fabric.contrib.files.exists('backup'):
-        fabric.api.run('mkdir backup')
-    if not fabric.contrib.files.exists('scratch'):
-        fabric.api.run('mkdir scratch')
-    if not fabric.contrib.files.exists('scratch/secrets'):
-        fabric.api.run('mkdir scratch/secrets')
+    fabric.api.run('mkdir -p backup')
+    fabric.api.run('mkdir -p scratch')
+    fabric.api.run('mkdir -p scratch/secrets')
 
     # Docker images can quickly fill a small disk, ensure they are on our big disk
     fabric.api.run('mkdir -p scratch/docker')
@@ -50,26 +47,6 @@ def purge_config():
 def purge_secrets():
     # Clear out any existing secrets
     fabric.api.run('rm -rf scratch/secrets')
-
-
-def purge_repository(name):
-    # Remove a directory we have previously pulled
-    #
-    # e.g. fab slicer purge_repository:pyramidwork
-
-    fabric.api.run('rm -rf docker-compose/{name}'.format(name=name))
-
-
-def pull_repository(name, git, branch='master'):
-    # Pull a repository, generally because we want to use it for development testing
-    #
-    # e.g. fab slicer pull_repository:pyramidwork,https://github.com/jayfo/docker-tractdb-pyramid.git,useractions
-
-    # We'll always clone from scratch, to be safe
-    fabric.api.run('rm -rf docker-compose/{name}'.format(name=name))
-
-    fabric.api.run('git clone {git} docker-compose/{name}'.format(name=name, git=git))
-    fabric.api.run('cd docker-compose/{name} && git checkout {branch}'.format(name=name, branch=branch))
 
 
 def push_config():
