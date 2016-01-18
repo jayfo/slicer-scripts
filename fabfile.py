@@ -75,12 +75,12 @@ def start(service=None):
         # Rebuild everything
         fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml build')
         # And run everything
-        fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml up -d')
+        fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml up --force-recreate -d')
     else:
         # Rebuild just this one service
         fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml build {}'.format(service))
         # And run just this one service
-        fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml up -d --no-deps {}'.format(service))
+        fabric.api.sudo('docker-compose -f ~/docker-compose/docker-compose.yml up --no-deps --force-recreate -d {}'.format(service))
 
 
 def stop(service=None):
