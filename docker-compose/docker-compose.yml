@@ -120,24 +120,24 @@ tractdbwebwatcher:
     SERVICE: "tractdbweb"
 
 ################################################################################
-# webcse440au15 and its watcher
+# webcse440sp16 and its watcher
 ################################################################################
-webcse440au15:
+webcse440sp16:
   build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/secrets/webcse440au15/webcse440au15.yml:/publish.yml"
+    - "/localdata/scratch/secrets/webcse440sp16/webcse440sp16.yml:/publish.yml"
   environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au15.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
 
-webcse440au15watcher:
+webcse440sp16watcher:
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
     - "/home/slicer/docker-compose:/docker-compose"
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au15.git"
-    SERVICE: "webcse440au15"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
+    SERVICE: "webcse440sp16"
 
 ################################################################################
 # webcse510wi16 and its watcher
