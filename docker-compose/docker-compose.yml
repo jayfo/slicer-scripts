@@ -140,26 +140,6 @@ webcse440sp16watcher:
     SERVICE: "webcse440sp16"
 
 ################################################################################
-# webcse510wi16 and its watcher
-################################################################################
-webcse510wi16:
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  volumes:
-    - "/localdata/scratch/secrets/webcse510wi16/webcse510wi16.yml:/publish.yml"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-wi16.git"
-
-webcse510wi16watcher:
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-wi16.git"
-    SERVICE: "webcse510wi16"
-
-################################################################################
 # webdub, its ambassador, and its watcher
 ################################################################################
 webdub:
