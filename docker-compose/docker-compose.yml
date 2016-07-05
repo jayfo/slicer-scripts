@@ -20,14 +20,14 @@ nginxproxy:
     - "80:80"
     - "443:443"
   links:
-    - systemsprojectcouchambassador:systemsprojectcouch
+#    - systemsprojectcouchambassador:systemsprojectcouch
     - tractdbcouchambassador:tractdbcouch
     - tractdbopencpuambassador:tractdbopencpu
     - tractdbpyramidambassador:tractdbpyramid
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
     - webduboldpapersambassador:webduboldpapers
-    - webdubstagingambassador:webdubstaging
+#    - webdubstagingambassador:webdubstaging
 
 ################################################################################
 # tractdbcouch, its ambassador, and its watcher
@@ -122,22 +122,22 @@ tractdbwebwatcher:
 ################################################################################
 # webcse440sp16 and its watcher
 ################################################################################
-webcse440sp16:
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  volumes:
-    - "/localdata/scratch/secrets/webcse440sp16/webcse440sp16.yml:/publish.yml"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
-
-webcse440sp16watcher:
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
-    SERVICE: "webcse440sp16"
+#webcse440sp16:
+#  build: "https://github.com/fogies/docker-jekyll-site.git"
+#  volumes:
+#    - "/localdata/scratch/secrets/webcse440sp16/webcse440sp16.yml:/publish.yml"
+#  environment:
+#    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
+#
+#webcse440sp16watcher:
+#  build: "https://github.com/fogies/docker-watcher.git"
+#  volumes:
+#    - "/var/run/docker.sock:/var/run/docker.sock"
+#    - "/home/slicer/docker-compose:/docker-compose"
+#  environment:
+#    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+#    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp16.git"
+#    SERVICE: "webcse440sp16"
 
 ################################################################################
 # webdub, its ambassador, and its watcher
@@ -192,29 +192,29 @@ webduboldpaperswatcher:
 ################################################################################
 # webdubstaging, its ambassador, and its watcher
 ################################################################################
-webdubstaging:
-  # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-#    GIT_REPOSITORY_SITE_BRANCH: "tbd_refactor"
-
-webdubstagingambassador:
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_webdubstaging_1"
-
-webdubstagingwatcher:
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-#    GIT_REPOSITORY_SITE_BRANCH: "tbd_refactor"
-    SERVICE: "webdubstaging"
+#webdubstaging:
+#  # port 4000
+#  build: "https://github.com/fogies/docker-jekyll-site.git"
+#  environment:
+#    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
+##    GIT_REPOSITORY_SITE_BRANCH: "tbd_refactor"
+#
+#webdubstagingambassador:
+#  image: cpuguy83/docker-grand-ambassador
+#  volumes:
+#    - "/var/run/docker.sock:/var/run/docker.sock"
+#  command: "-name dockercompose_webdubstaging_1"
+#
+#webdubstagingwatcher:
+#  build: "https://github.com/fogies/docker-watcher.git"
+#  volumes:
+#    - "/var/run/docker.sock:/var/run/docker.sock"
+#    - "/home/slicer/docker-compose:/docker-compose"
+#  environment:
+#    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+#    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
+##    GIT_REPOSITORY_SITE_BRANCH: "tbd_refactor"
+#    SERVICE: "webdubstaging"
 
 ################################################################################
 # webjayfo and its watcher
@@ -239,25 +239,25 @@ webjayfowatcher:
 ################################################################################
 # systemsprojectcouch, its ambassador, and its watcher
 ################################################################################
-systemsprojectcouch:
-  # port 5984
-  build: "https://github.com/tractdb/docker-tractdb-couch.git"
-  volumes:
-    - "/localdata/backup/systemsprojectcouch/data:/var/lib/couchdb"
-    - "/localdata/backup/systemsprojectcouch/logs:/var/log/couchdb"
-    - "/localdata/scratch/secrets/systemsprojectcouch:/secrets"
-
-systemsprojectcouchambassador:
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_systemsprojectcouch_1"
-
-systemsprojectcouchwatcher:
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
-    SERVICE: "systemsprojectcouch"
+#systemsprojectcouch:
+#  # port 5984
+#  build: "https://github.com/tractdb/docker-tractdb-couch.git"
+#  volumes:
+#    - "/localdata/backup/systemsprojectcouch/data:/var/lib/couchdb"
+#    - "/localdata/backup/systemsprojectcouch/logs:/var/log/couchdb"
+#    - "/localdata/scratch/secrets/systemsprojectcouch:/secrets"
+#
+#systemsprojectcouchambassador:
+#  image: cpuguy83/docker-grand-ambassador
+#  volumes:
+#    - "/var/run/docker.sock:/var/run/docker.sock"
+#  command: "-name dockercompose_systemsprojectcouch_1"
+#
+#systemsprojectcouchwatcher:
+#  build: "https://github.com/fogies/docker-watcher.git"
+#  volumes:
+#    - "/var/run/docker.sock:/var/run/docker.sock"
+#    - "/home/slicer/docker-compose:/docker-compose"
+#  environment:
+#    GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
+#    SERVICE: "systemsprojectcouch"
