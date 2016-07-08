@@ -34,7 +34,7 @@ def init():
     fabric.api.sudo('curl -sSL https://get.docker.com/ | sh')
 
     # Install Compose
-    fabric.api.sudo('curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose')
+    fabric.api.sudo('curl -L https://github.com/docker/compose/releases/download/1.8.0-rc1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose')
     fabric.api.sudo('chmod +x /usr/local/bin/docker-compose')
 
 
