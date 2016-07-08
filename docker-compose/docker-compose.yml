@@ -2,7 +2,7 @@
 # Proxy points incoming traffic at ambassadors
 ################################################################################
 nginxproxy:
-  build: "https://github.com/fogies/docker-nginx.git"
+  build: "https://github.com/fogies/docker-nginx.git#before-base"
   volumes:
     # nginx Config
     - "/localdata/scratch/config/nginxproxy:/config"
