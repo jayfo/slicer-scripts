@@ -21,7 +21,6 @@ nginxproxy:
     - "443:443"
   links:
     - tractdbcouchambassador:tractdbcouch
-    - tractdbopencpuambassador:tractdbopencpu
     - tractdbpyramidambassador:tractdbpyramid
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
@@ -52,19 +51,6 @@ tractdbcouchwatcher:
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
     SERVICE: "tractdbcouch"
-
-################################################################################
-# tractdbopencpu and its ambassador
-################################################################################
-tractdbopencpu:
-  # port 8004
-  image: opencpu/rstudio
-
-tractdbopencpuambassador:
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_tractdbopencpu_1"
 
 ################################################################################
 # tractdbpyramid, its ambassador, and its watcher
