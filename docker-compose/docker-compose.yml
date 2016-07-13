@@ -57,7 +57,7 @@ tractdbcouchwatcher:
 ################################################################################
 tractdbpyramid:
   # port 8080
-  build: "https://github.com/tractdb/docker-tractdb-pyramid.git"
+  build: "https://github.com/tractdb/docker-tractdb-pyramid.git#before-base"
   volumes:
     - "/localdata/scratch/secrets/tractdbpyramid:/secrets"
   links:
