@@ -10,8 +10,6 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.dhparams.pem:/etc/ssl/nginx/dub.washington.edu.dhparams.pem"
-    # DUB staging password protection
-    - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging"
     # TractDB SSL Certificates
     - "/localdata/scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
     - "/localdata/scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
@@ -83,7 +81,7 @@ tractdbpyramidwatcher:
 ################################################################################
 tractdbweb:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
 
@@ -108,7 +106,7 @@ tractdbwebwatcher:
 ################################################################################
 webdub:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
 
@@ -133,7 +131,7 @@ webdubwatcher:
 ################################################################################
 webduboldpapers:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
 
@@ -157,7 +155,7 @@ webduboldpaperswatcher:
 # webjayfo and its watcher
 ################################################################################
 webjayfo:
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   volumes:
     - "/localdata/scratch/secrets/webjayfo/webjayfo.yml:/publish.yml"
   environment:
