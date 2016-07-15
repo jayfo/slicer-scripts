@@ -81,7 +81,7 @@ tractdbpyramidwatcher:
 ################################################################################
 tractdbweb:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
 
@@ -106,7 +106,7 @@ tractdbwebwatcher:
 ################################################################################
 webdub:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
 
@@ -131,7 +131,7 @@ webdubwatcher:
 ################################################################################
 webduboldpapers:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
 
@@ -155,7 +155,7 @@ webduboldpaperswatcher:
 # webjayfo and its watcher
 ################################################################################
 webjayfo:
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   volumes:
     - "/localdata/scratch/secrets/webjayfo/webjayfo.yml:/publish.yml"
   environment:
