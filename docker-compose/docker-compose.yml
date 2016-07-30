@@ -81,9 +81,10 @@ tractdbpyramidwatcher:
 ################################################################################
 tractdbweb:
   # port 4000
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
+  build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
-    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git#before-base"
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
+    GIT_REPOSITORY_SITE_BRANCH: "before-base"
 
 tractdbwebambassador:
   image: cpuguy83/docker-grand-ambassador
