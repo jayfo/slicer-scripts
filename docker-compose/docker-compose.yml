@@ -83,7 +83,7 @@ tractdbweb:
   # port 4000
   build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
-    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git#before-base"
 
 tractdbwebambassador:
   image: cpuguy83/docker-grand-ambassador
