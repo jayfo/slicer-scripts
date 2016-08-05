@@ -10,6 +10,8 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.dhparams.pem:/etc/ssl/nginx/dub.washington.edu.dhparams.pem"
+    # DUBStaging Secrets
+    - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
     # TractDB SSL Certificates
     - "/localdata/scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
     - "/localdata/scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
@@ -23,6 +25,7 @@ nginxproxy:
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
     - webduboldpapersambassador:webduboldpapers
+    - webdubstagingambassador:webdubstaging
 
 ################################################################################
 # tractdbcouch, its ambassador, and its watcher
@@ -126,6 +129,32 @@ webdubwatcher:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
     SERVICE: "webdub"
+
+################################################################################
+# webdubstaging, its ambassador, and its watcher
+################################################################################
+webdubstaging:
+  # port 4000
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
+    GIT_REPOSITORY_SITE_BRANCH: "people"
+
+webdubstagingambassador:
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name dockercompose_webdubstaging_1"
+
+webdubstagingwatcher:
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
+    SERVICE: "webdubstaging"
 
 ################################################################################
 # webduboldpapers, its ambassador, and its watcher
