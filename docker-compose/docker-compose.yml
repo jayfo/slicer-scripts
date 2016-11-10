@@ -6,10 +6,14 @@ nginxproxy:
   volumes:
     # nginx Config
     - "/localdata/scratch/config/nginxproxy:/config"
-    # DUB SSL Certificates
+    # DUB SSL Certificates (dub.washington.edu)
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.dhparams.pem:/etc/ssl/nginx/dub.washington.edu.dhparams.pem"
+    # DUB SSL Certificates (dub.uw.edu)
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.nginx.crt:/etc/ssl/nginx/dub.uw.edu.nginx.crt"
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.key:/etc/ssl/nginx/dub.uw.edu.key"
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
     # DUBStaging Secrets
     - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
     # TractDB SSL Certificates
