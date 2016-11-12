@@ -1,0 +1,4 @@
+publish_ssh:
+  host: barb.cs.washington.edu
+  staging: ~/publish_staging/webjayfo
+  publish: ~/public_html

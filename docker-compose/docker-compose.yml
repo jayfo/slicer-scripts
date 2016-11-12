@@ -235,7 +235,8 @@ webjayfo:
   container_name: webjayfo
   build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/secrets/webjayfo/webjayfo.yml:/publish.yml"
+    - "/localdata/scratch/config/webjayfo/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
 
