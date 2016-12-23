@@ -2,14 +2,19 @@
 # Proxy points incoming traffic at ambassadors
 ################################################################################
 nginxproxy:
+  container_name: nginxproxy
   build: "https://github.com/fogies/docker-nginx.git#before-base"
   volumes:
     # nginx Config
     - "/localdata/scratch/config/nginxproxy:/config"
-    # DUB SSL Certificates
+    # DUB SSL Certificates (dub.washington.edu)
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.dhparams.pem:/etc/ssl/nginx/dub.washington.edu.dhparams.pem"
+    # DUB SSL Certificates (dub.uw.edu)
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.nginx.crt:/etc/ssl/nginx/dub.uw.edu.nginx.crt"
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.key:/etc/ssl/nginx/dub.uw.edu.key"
+    - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
     # DUBStaging Secrets
     - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
     # TractDB SSL Certificates
@@ -21,17 +26,20 @@ nginxproxy:
     - "443:443"
   links:
     - tt_tractdbcouchambassador:tt_tractdbcouch
-#    - tractdbpyramidambassador:tractdbpyramid
+    - tractdbpyramidambassador:tractdbpyramid
+    - tractdbcouchambassador:tractdbcouch
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
     - webduboldpapersambassador:webduboldpapers
     - webdubstagingambassador:webdubstaging
 
+
 ################################################################################
-# tractdbcouch, its ambassador, and its watcher
+# An old instance of tractdbcouch, left in place for TummyTrials deployment
 ################################################################################
 tt_tractdbcouch:
   # port 5984
+  container_name: tt_tractdbcouch
   build: "https://github.com/tractdb/docker-tractdb-couch.git"
   volumes:
     - "/localdata/backup/tt_tractdbcouch/data:/var/lib/couchdb"
@@ -39,63 +47,93 @@ tt_tractdbcouch:
     - "/localdata/scratch/secrets/tt_tractdbcouch:/secrets"
 
 tt_tractdbcouchambassador:
+  container_name: tt_tractdbcouchambassador
   image: cpuguy83/docker-grand-ambassador
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_tt_tractdbcouch_1"
+  command: "-name tt_tractdbcouch"
 
-# tractdbcouchwatcher:
-#   build: "https://github.com/fogies/docker-watcher.git"
-#   volumes:
-#     - "/var/run/docker.sock:/var/run/docker.sock"
-#     - "/home/slicer/docker-compose:/docker-compose"
-#   environment:
-#     GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
-#     SERVICE: "tt_tractdbcouch"
+################################################################################
+# tractdbcouch, its ambassador, and its watcher
+################################################################################
+tractdbcouch:
+  # port 5984
+  container_name: tractdbcouch
+  build: "https://github.com/fogies/docker-couchdb.git"
+  volumes:
+    - "/localdata/backup/tractdbcouch/data:/var/lib/couchdb"
+    - "/localdata/backup/tractdbcouch/logs:/var/log/couchdb"
+    - "/localdata/scratch/secrets/tractdbcouch/secrets.yml:/docker-couchdb-secrets/secrets.yml:ro"
+
+tractdbcouchambassador:
+  container_name: tractdbcouchambassador
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name tractdbcouch"
+
+tractdbcouchwatcher:
+  container_name: tractdbcouchwatcher
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-couch.git"
+    SERVICE: "tractdbcouch"
 
 ################################################################################
 # tractdbpyramid, its ambassador, and its watcher
 ################################################################################
-# tractdbpyramid:
-#   # port 8080
-#   build: "https://github.com/tractdb/docker-tractdb-pyramid.git#before-base"
-#   volumes:
-#     - "/localdata/scratch/secrets/tractdbpyramid:/secrets"
-#   links:
-#     - tractdbcouchambassador:tractdbcouch
-#
-# tractdbpyramidambassador:
-#   image: cpuguy83/docker-grand-ambassador
-#   volumes:
-#     - "/var/run/docker.sock:/var/run/docker.sock"
-#   command: "-name dockercompose_tractdbpyramid_1"
-#
-# tractdbpyramidwatcher:
-#   build: "https://github.com/fogies/docker-watcher.git"
-#   volumes:
-#     - "/var/run/docker.sock:/var/run/docker.sock"
-#     - "/home/slicer/docker-compose:/docker-compose"
-#   environment:
-#     GIT_REPOSITORY_SERVICE: "https://github.com/tractdb/docker-tractdb-pyramid.git"
-#     SERVICE: "tractdbpyramid"
+tractdbpyramid:
+  # port 8080
+  container_name: tractdbpyramid
+  build: "https://github.com/fogies/docker-pyramid.git"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/tractdb-pyramid.git"
+  volumes:
+    - "/localdata/scratch/config/tractdbpyramid/pyramid_config.ini:/docker-pyramid-site/pyramid_config.production.ini:ro"
+    - "/localdata/scratch/secrets/tractdbcouch/secrets.yml:/docker-pyramid-site/couchdb_secrets.yml:ro"
+  links:
+    - tractdbcouchambassador:tractdbcouch
+
+tractdbpyramidambassador:
+  container_name: tractdbpyramidambassador
+  image: cpuguy83/docker-grand-ambassador
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  command: "-name tractdbpyramid"
+
+tractdbpyramidwatcher:
+  container_name: tractdbpyramidwatcher
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-pyramid.git"
+    GIT_REPOSITORY_SITE: "https://github.com/tractdb/tractdb-pyramid.git"
+    SERVICE: "tractdbpyramid"
 
 ################################################################################
 # tractdbweb, its ambassador, and its watcher
 ################################################################################
 tractdbweb:
   # port 4000
+  container_name: tractdbweb
   build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
-    GIT_REPOSITORY_SITE_BRANCH: "before-base"
 
 tractdbwebambassador:
+  container_name: tractdbwebambassador
   image: cpuguy83/docker-grand-ambassador
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_tractdbweb_1"
+  command: "-name tractdbweb"
 
 tractdbwebwatcher:
+  container_name: tractdbwebwatcher
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
@@ -110,17 +148,20 @@ tractdbwebwatcher:
 ################################################################################
 webdub:
   # port 4000
+  container_name: webdub
   build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
 
 webdubambassador:
+  container_name: webdubambassador
   image: cpuguy83/docker-grand-ambassador
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_webdub_1"
+  command: "-name webdub"
 
 webdubwatcher:
+  container_name: webdubwatcher
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
@@ -135,18 +176,21 @@ webdubwatcher:
 ################################################################################
 webdubstaging:
   # port 4000
+  container_name: webdubstaging
   build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
     GIT_REPOSITORY_SITE_BRANCH: "people"
 
 webdubstagingambassador:
+  container_name: webdubstagingambassador
   image: cpuguy83/docker-grand-ambassador
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_webdubstaging_1"
+  command: "-name webdubstaging"
 
 webdubstagingwatcher:
+  container_name: webdubstagingwatcher
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
@@ -161,17 +205,20 @@ webdubstagingwatcher:
 ################################################################################
 webduboldpapers:
   # port 4000
+  container_name: webduboldpapers
   build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
 
 webduboldpapersambassador:
+  container_name: webduboldpapersambassador
   image: cpuguy83/docker-grand-ambassador
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name dockercompose_webduboldpapers_1"
+  command: "-name webduboldpapers"
 
 webduboldpaperswatcher:
+  container_name: webduboldpaperswatcher
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
@@ -185,13 +232,16 @@ webduboldpaperswatcher:
 # webjayfo and its watcher
 ################################################################################
 webjayfo:
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
+  container_name: webjayfo
+  build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/secrets/webjayfo/webjayfo.yml:/publish.yml"
+    - "/localdata/scratch/config/webjayfo/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
 
 webjayfowatcher:
+  container_name: webjayfowatcher
   build: "https://github.com/fogies/docker-watcher.git"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock"
