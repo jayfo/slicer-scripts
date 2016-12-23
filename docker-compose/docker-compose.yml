@@ -250,3 +250,26 @@ webjayfowatcher:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
     GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
     SERVICE: "webjayfo"
+
+################################################################################
+# webcse440 and its watcher
+################################################################################
+webcse440:
+  container_name: webcse440
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  volumes:
+    - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-wi17.git"
+
+webcse440watcher:
+  container_name: webcse440watcher
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-wi17.git"
+    SERVICE: "webcse440"

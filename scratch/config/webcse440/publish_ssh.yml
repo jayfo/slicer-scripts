@@ -1,0 +1,4 @@
+publish_ssh:
+  host: barb.cs.washington.edu
+  staging: ~/publish_staging/webcse44017wi
+  publish: /cse/web/courses/cse440/17wi
