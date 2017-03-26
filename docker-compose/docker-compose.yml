@@ -273,3 +273,26 @@ webcse440watcher:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
     GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-wi17.git"
     SERVICE: "webcse440"
+
+################################################################################
+# webcse510 and its watcher
+################################################################################
+webcse510:
+  container_name: webcse510
+  build: "https://github.com/fogies/docker-jekyll-site.git"
+  volumes:
+    - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+  environment:
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-sp17.git"
+
+webcse510watcher:
+  container_name: webcse510watcher
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-sp17.git"
+    SERVICE: "webcse510"
