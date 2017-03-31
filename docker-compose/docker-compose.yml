@@ -94,6 +94,7 @@ tractdbpyramid:
   volumes:
     - "/localdata/scratch/config/tractdbpyramid/pyramid_config.ini:/docker-pyramid-site/pyramid_config.production.ini:ro"
     - "/localdata/scratch/secrets/tractdbcouch/secrets.yml:/docker-pyramid-site/couchdb_secrets.yml:ro"
+    - "/localdata/scratch/secrets/tractdbpyramid/secrets.yml:/docker-pyramid-site/pyramid_secrets.yml:ro"
   links:
     - tractdbcouchambassador:tractdbcouch
 
