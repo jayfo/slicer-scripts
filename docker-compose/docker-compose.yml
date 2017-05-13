@@ -7,6 +7,9 @@ nginxproxy:
   volumes:
     # nginx Config
     - "/localdata/scratch/config/nginxproxy:/config"
+    # Certbot
+    - "/localdata/scratch/secrets/certbot:/etc/letsencrypt"
+    - "/localdata/scratch/secrets/certbotacme:/var/www/webroot"
     # DUB SSL Certificates (dub.washington.edu)
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.nginx.crt:/etc/ssl/nginx/dub.washington.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.washington.edu.key:/etc/ssl/nginx/dub.washington.edu.key"
@@ -17,9 +20,7 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
     # DUBStaging Secrets
     - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
-    # TractDB SSL Certificates
-    - "/localdata/scratch/secrets/tractdbssl/tractdb.org.nginx.crt:/etc/ssl/nginx/tractdb.org.nginx.crt"
-    - "/localdata/scratch/secrets/tractdbssl/tractdb.org.key:/etc/ssl/nginx/tractdb.org.key"
+    # TractDB DHParams
     - "/localdata/scratch/secrets/tractdbssl/tractdb.org.dhparams.pem:/etc/ssl/nginx/tractdb.org.dhparams.pem"
   ports:
     - "80:80"
@@ -33,6 +34,28 @@ nginxproxy:
     - webduboldpapersambassador:webduboldpapers
     - webdubstagingambassador:webdubstaging
 
+################################################################################
+# certbot, and its watcher
+#
+# sudo docker-compose -f docker-compose/docker-compose.yml run certbot certonly --webroot -w /var/www/webroot -d tractdb.org -d www.tractdb.org
+################################################################################
+certbot:
+  container_name: certbot
+  image: certbot/certbot
+  volumes:
+    - "/localdata/scratch/secrets/certbot:/etc/letsencrypt"
+    - "/localdata/scratch/secrets/certbotacme:/var/www/webroot"
+  command: "renew"
+
+certbotwatcher:
+  container_name: certbotwatcher
+  build: "https://github.com/fogies/docker-watcher.git"
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/slicer/docker-compose:/docker-compose"
+  environment:
+    GIT_REPOSITORY_SERVICE: "https://github.com/certbot/certbot.git"
+    SERVICE: "certbot"
 
 ################################################################################
 # An old instance of tractdbcouch, left in place for TummyTrials deployment
