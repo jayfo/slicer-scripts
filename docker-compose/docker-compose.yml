@@ -20,8 +20,6 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
     # DUBStaging Secrets
     - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
-    # TractDB DHParams
-    - "/localdata/scratch/secrets/tractdbssl/tractdb.org.dhparams.pem:/etc/ssl/nginx/tractdb.org.dhparams.pem"
   ports:
     - "80:80"
     - "443:443"
@@ -38,6 +36,7 @@ nginxproxy:
 # certbot, and its watcher
 #
 # sudo docker-compose -f docker-compose/docker-compose.yml run certbot certonly --webroot -w /var/www/webroot -d tractdb.org -d www.tractdb.org
+# sudo openssl dhparam -out scratch/secrets/certbot/live/tractdb.org/dhparam.pem 2048
 ################################################################################
 certbot:
   container_name: certbot
