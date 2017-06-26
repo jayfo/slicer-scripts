@@ -117,6 +117,7 @@ tractdbpyramid:
     - "/localdata/scratch/config/tractdbpyramid/pyramid_config.ini:/docker-pyramid-site/pyramid_config.production.ini:ro"
     - "/localdata/scratch/secrets/tractdbcouch/secrets.yml:/docker-pyramid-site/secrets_couchdb.yml:ro"
     - "/localdata/scratch/secrets/tractdbdarksky/secrets.yml:/docker-pyramid-site/secrets_darksky.yml:ro"
+    - "/localdata/scratch/secrets/tractdbfitbit/secrets.yml:/docker-pyramid-site/secrets_fitbit.yml:ro"
     - "/localdata/scratch/secrets/tractdbpyramid/secrets.yml:/docker-pyramid-site/secrets_pyramid.yml:ro"
     - "/localdata/scratch/secrets/tractdbstrava/secrets.yml:/docker-pyramid-site/secrets_strava.yml:ro"
   links:
