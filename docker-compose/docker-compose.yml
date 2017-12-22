@@ -114,6 +114,7 @@ tractdbpyramid:
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/tractdb-pyramid.git"
   volumes:
+    - "/localdata/scratch/data/tractdbpyramid:/docker-pyramid-site/data"
     - "/localdata/scratch/config/tractdbpyramid/pyramid_config.ini:/docker-pyramid-site/pyramid_config.production.ini:ro"
     - "/localdata/scratch/secrets/tractdbcouch/secrets.yml:/docker-pyramid-site/secrets_couchdb.yml:ro"
     - "/localdata/scratch/secrets/tractdbdarksky/secrets.yml:/docker-pyramid-site/secrets_darksky.yml:ro"

@@ -59,6 +59,12 @@ def push_config():
     fabric.api.put('scratch/config', 'scratch')
 
 
+def push_data():
+    # Upload our data files
+    fabric.api.run('mkdir -p scratch/data/')
+    fabric.api.put('scratch/data', 'scratch')
+
+
 def push_secrets():
     # Upload our secrets
     fabric.api.run('mkdir -p scratch/secrets/')
