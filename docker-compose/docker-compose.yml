@@ -311,7 +311,7 @@ webcse510:
     - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
     - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
   environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-wi18.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-au18.git"
 
 webcse510watcher:
   container_name: webcse510watcher
@@ -321,5 +321,5 @@ webcse510watcher:
     - "/home/slicer/docker-compose:/docker-compose"
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-wi18.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-au18.git"
     SERVICE: "webcse510"
