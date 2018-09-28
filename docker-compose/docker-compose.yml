@@ -148,7 +148,7 @@ tractdbpyramidwatcher:
 tractdbweb:
   # port 4000
   container_name: tractdbweb
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
 
@@ -176,7 +176,7 @@ tractdbwebwatcher:
 webdub:
   # port 4000
   container_name: webdub
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
 
@@ -204,7 +204,7 @@ webdubwatcher:
 webdubstaging:
   # port 4000
   container_name: webdubstaging
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
     GIT_REPOSITORY_SITE_BRANCH: "people"
@@ -233,7 +233,7 @@ webdubstagingwatcher:
 webduboldpapers:
   # port 4000
   container_name: webduboldpapers
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
 
@@ -260,7 +260,7 @@ webduboldpaperswatcher:
 ################################################################################
 webjayfo:
   container_name: webjayfo
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   volumes:
     - "/localdata/scratch/config/webjayfo/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
     - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
@@ -283,7 +283,7 @@ webjayfowatcher:
 ################################################################################
 webcse440:
   container_name: webcse440
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   volumes:
     - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
     - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
@@ -306,7 +306,7 @@ webcse440watcher:
 ################################################################################
 webcse510:
   container_name: webcse510
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   volumes:
     - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
     - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
