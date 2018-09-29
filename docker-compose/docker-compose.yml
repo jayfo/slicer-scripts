@@ -306,10 +306,10 @@ webcse440watcher:
 ################################################################################
 webcse510:
   container_name: webcse510
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
+  build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
-    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+    - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-au18.git"
 
