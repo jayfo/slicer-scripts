@@ -283,10 +283,10 @@ webjayfowatcher:
 ################################################################################
 webcse440:
   container_name: webcse440
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
+  build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
-    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+    - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au18.git"
 
