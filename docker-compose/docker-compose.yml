@@ -176,7 +176,7 @@ tractdbwebwatcher:
 webdub:
   # port 4000
   container_name: webdub
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
+  build: "https://github.com/fogies/docker-jekyll-site.git"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
 
