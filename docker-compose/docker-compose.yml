@@ -18,8 +18,6 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.nginx.crt:/etc/ssl/nginx/dub.uw.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.key:/etc/ssl/nginx/dub.uw.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
-    # DUBStaging Secrets
-    - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
   ports:
     - "80:80"
     - "443:443"
@@ -29,8 +27,6 @@ nginxproxy:
     - tractdbcouchambassador:tractdbcouch
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
-    - webduboldpapersambassador:webduboldpapers
-    - webdubstagingambassador:webdubstaging
 
 ################################################################################
 # certbot, and its watcher
@@ -197,35 +193,6 @@ webdubwatcher:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
     GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
     SERVICE: "webdub"
-
-################################################################################
-# webdubstaging, its ambassador, and its watcher
-################################################################################
-webdubstaging:
-  # port 4000
-  container_name: webdubstaging
-  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-    GIT_REPOSITORY_SITE_BRANCH: "people"
-
-webdubstagingambassador:
-  container_name: webdubstagingambassador
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name webdubstaging"
-
-webdubstagingwatcher:
-  container_name: webdubstagingwatcher
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-    SERVICE: "webdubstaging"
 
 ################################################################################
 # webduboldpapers, its ambassador, and its watcher
