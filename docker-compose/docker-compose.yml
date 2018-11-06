@@ -22,7 +22,6 @@ nginxproxy:
     - "80:80"
     - "443:443"
   links:
-    - tt_tractdbcouchambassador:tt_tractdbcouch
     - tractdbpyramidambassador:tractdbpyramid
     - tractdbcouchambassador:tractdbcouch
     - tractdbwebambassador:tractdbweb
@@ -51,25 +50,6 @@ certbotwatcher:
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/certbot/certbot.git"
     SERVICE: "certbot"
-
-################################################################################
-# An old instance of tractdbcouch, left in place for TummyTrials deployment
-################################################################################
-tt_tractdbcouch:
-  # port 5984
-  container_name: tt_tractdbcouch
-  build: "https://github.com/tractdb/docker-tractdb-couch.git"
-  volumes:
-    - "/localdata/backup/tt_tractdbcouch/data:/var/lib/couchdb"
-    - "/localdata/backup/tt_tractdbcouch/logs:/var/log/couchdb"
-    - "/localdata/scratch/secrets/tt_tractdbcouch:/secrets"
-
-tt_tractdbcouchambassador:
-  container_name: tt_tractdbcouchambassador
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name tt_tractdbcouch"
 
 ################################################################################
 # tractdbcouch, its ambassador, and its watcher
