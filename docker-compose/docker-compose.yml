@@ -18,19 +18,14 @@ nginxproxy:
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.nginx.crt:/etc/ssl/nginx/dub.uw.edu.nginx.crt"
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.key:/etc/ssl/nginx/dub.uw.edu.key"
     - "/localdata/scratch/secrets/dubssl/dub.uw.edu.dhparams.pem:/etc/ssl/nginx/dub.uw.edu.dhparams.pem"
-    # DUBStaging Secrets
-    - "/localdata/scratch/secrets/webdubstaging:/secrets/webdubstaging:ro"
   ports:
     - "80:80"
     - "443:443"
   links:
-    - tt_tractdbcouchambassador:tt_tractdbcouch
     - tractdbpyramidambassador:tractdbpyramid
     - tractdbcouchambassador:tractdbcouch
     - tractdbwebambassador:tractdbweb
     - webdubambassador:webdub
-    - webduboldpapersambassador:webduboldpapers
-    - webdubstagingambassador:webdubstaging
 
 ################################################################################
 # certbot, and its watcher
@@ -55,25 +50,6 @@ certbotwatcher:
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/certbot/certbot.git"
     SERVICE: "certbot"
-
-################################################################################
-# An old instance of tractdbcouch, left in place for TummyTrials deployment
-################################################################################
-tt_tractdbcouch:
-  # port 5984
-  container_name: tt_tractdbcouch
-  build: "https://github.com/tractdb/docker-tractdb-couch.git"
-  volumes:
-    - "/localdata/backup/tt_tractdbcouch/data:/var/lib/couchdb"
-    - "/localdata/backup/tt_tractdbcouch/logs:/var/log/couchdb"
-    - "/localdata/scratch/secrets/tt_tractdbcouch:/secrets"
-
-tt_tractdbcouchambassador:
-  container_name: tt_tractdbcouchambassador
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name tt_tractdbcouch"
 
 ################################################################################
 # tractdbcouch, its ambassador, and its watcher
@@ -148,7 +124,7 @@ tractdbpyramidwatcher:
 tractdbweb:
   # port 4000
   container_name: tractdbweb
-  build: "https://github.com/fogies/docker-jekyll-site.git"
+  build: "https://github.com/fogies/docker-jekyll-site.git#before-base"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/tractdb/web-tractdb.git"
 
@@ -199,71 +175,14 @@ webdubwatcher:
     SERVICE: "webdub"
 
 ################################################################################
-# webdubstaging, its ambassador, and its watcher
-################################################################################
-webdubstaging:
-  # port 4000
-  container_name: webdubstaging
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-    GIT_REPOSITORY_SITE_BRANCH: "people"
-
-webdubstagingambassador:
-  container_name: webdubstagingambassador
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name webdubstaging"
-
-webdubstagingwatcher:
-  container_name: webdubstagingwatcher
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub.git"
-    SERVICE: "webdubstaging"
-
-################################################################################
-# webduboldpapers, its ambassador, and its watcher
-################################################################################
-webduboldpapers:
-  # port 4000
-  container_name: webduboldpapers
-  build: "https://github.com/fogies/docker-jekyll-site.git"
-  environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
-
-webduboldpapersambassador:
-  container_name: webduboldpapersambassador
-  image: cpuguy83/docker-grand-ambassador
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  command: "-name webduboldpapers"
-
-webduboldpaperswatcher:
-  container_name: webduboldpaperswatcher
-  build: "https://github.com/fogies/docker-watcher.git"
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/home/slicer/docker-compose:/docker-compose"
-  environment:
-    GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwdub/web-dub-oldpapers.git"
-    SERVICE: "webduboldpapers"
-
-################################################################################
 # webjayfo and its watcher
 ################################################################################
 webjayfo:
   container_name: webjayfo
   build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/config/webjayfo/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
-    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+    - "/localdata/scratch/config/webjayfo/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/fogies/web-jayfo.git"
 
@@ -285,8 +204,8 @@ webcse440:
   container_name: webcse440
   build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
-    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+    - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au18.git"
 
@@ -308,8 +227,8 @@ webcse510:
   container_name: webcse510
   build: "https://github.com/fogies/docker-jekyll-site.git"
   volumes:
-    - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker-jekyll-site/publish_ssh.yml"
-    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker-jekyll-site/publish_ssh_secrets.yml"
+    - "/localdata/scratch/config/webcse510/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
+    - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
     GIT_REPOSITORY_SITE: "https://github.com/uwcse510/web-cse510-au18.git"
 
