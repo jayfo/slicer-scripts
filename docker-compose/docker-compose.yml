@@ -199,7 +199,7 @@ webcse440:
     - "/localdata/scratch/config/webcse440/publish_ssh.yml:/docker_jekyll_site/publish_ssh.yml"
     - "/localdata/scratch/secrets/barb.cs.washington.edu/publish_ssh_secrets.yml:/docker_jekyll_site/publish_ssh_secrets.yml"
   environment:
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au18.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp19.git"
 
 webcse440watcher:
   container_name: webcse440watcher
@@ -209,7 +209,7 @@ webcse440watcher:
     - "/home/slicer/docker-compose:/docker-compose"
   environment:
     GIT_REPOSITORY_SERVICE: "https://github.com/fogies/docker-jekyll-site.git"
-    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-au18.git"
+    GIT_REPOSITORY_SITE: "https://github.com/uwcse440/web-cse440-sp19.git"
     SERVICE: "webcse440"
 
 ################################################################################
